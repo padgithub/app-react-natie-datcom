@@ -14,10 +14,10 @@ const Components = TabNavigator(
       screen: ButtonsTab,
       path: '/buttons',
       navigationOptions: {
-        tabBarLabel: 'Buttons',
+        tabBarLabel: 'Trang Chủ',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
-            name={focused ? 'emoticon-cool' : 'emoticon-neutral'}
+            name={focused ? 'home' : 'home'}
             size={30}
             type="material-community"
             color={tintColor}
@@ -29,9 +29,9 @@ const Components = TabNavigator(
       screen: ListsTab,
       path: '/lists',
       navigationOptions: {
-        tabBarLabel: 'Lists',
+        tabBarLabel: 'Yêu Thích',
         tabBarIcon: ({ tintColor, focused }) => (
-          <Icon name="list" size={30} type="entypo" color={tintColor} />
+          <Icon name="heart" size={30} type="entypo" color={tintColor} />
         ),
       },
     },
@@ -39,10 +39,10 @@ const Components = TabNavigator(
       screen: InputTab,
       path: '/input',
       navigationOptions: {
-        tabBarLabel: 'Input',
+        tabBarLabel: 'Tìm Kiếm',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
-            name="wpforms"
+            name="search"
             size={30}
             type="font-awesome"
             color={tintColor}
@@ -54,10 +54,10 @@ const Components = TabNavigator(
       screen: FontsTab,
       path: '/fonts',
       navigationOptions: {
-        tabBarLabel: 'Fonts',
+        tabBarLabel: 'Giỏ Hàng',
         tabBarIcon: ({ tintColor, focused }) => (
           <Icon
-            name={focused ? 'font' : 'font'}
+            name={focused ? 'shopping-cart' : 'shopping-cart'}
             size={30}
             type="font-awesome"
             color={tintColor}

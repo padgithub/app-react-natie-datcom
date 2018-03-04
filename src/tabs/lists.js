@@ -21,7 +21,7 @@ const ListsTab = StackNavigator({
     screen: ListsTabView,
     path: '/',
     navigationOptions: ({ navigation }) => ({
-      title: 'Lists',
+      title: 'Của Hàng Yêu Thích',
       headerLeft: (
         <Icon
           name="menu"

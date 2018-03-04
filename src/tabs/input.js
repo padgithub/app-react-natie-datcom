@@ -2,7 +2,7 @@ import Expo from 'expo';
 import React, { Component } from 'react';
 
 import { StackNavigator } from 'react-navigation';
-import { Icon } from 'react-native-elements';
+import { Icon,SearchBar } from 'react-native-elements';
 
 import InputHome from '../views/input_home';
 import InputDetails from '../views/input_details';
@@ -10,6 +10,15 @@ import InputDetails from '../views/input_details';
 const InputTabView = ({ navigation }) => (
   <InputHome navigation={navigation} />
 );
+
+const dummySearchBarProps = {
+  showLoading: true,
+  onFocus: () => console.log("focus"),
+  onBlur: () => console.log("blur"),
+  onCancel: () => console.log("cancel"),
+  onClearText: () => console.log("cleared"),
+  onChangeText: text => console.log("text:", text),
+}
 
 const InputDetailTabView = ({ navigation }) => (
   <InputDetails
@@ -23,17 +32,12 @@ const InputTab = StackNavigator({
     screen: InputTabView,
     path: '/',
     navigationOptions: ({ navigation }) => ({
-      title: 'Input',
-      headerLeft: (
-        <Icon
-          name="menu"
-          size={30}
-          type="entypo"
-          style={{ paddingLeft: 10 }}
-          onPress={() => navigation.navigate('DrawerOpen')}
-        />
+      //title: 'Input'
+      headerRight: (
+        <SearchBar placeholder="Nhập chửa hàng cần tìm" platform="ios" {...dummySearchBarProps} />
       ),
     }),
+
   },
   Input_Detail: {
     screen: InputDetailTabView,
