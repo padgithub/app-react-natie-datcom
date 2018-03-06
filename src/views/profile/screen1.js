@@ -74,7 +74,7 @@ export default class LoginScreen1 extends Component {
             <View style={styles.statusBar} />
             <View style={styles.navBar}>
               <Text style={styles.nameHeader}>
-                Theresa, 26
+                Anh Dũng, 22
               </Text>
             </View>
             <ScrollView style={{flex: 1}}>
@@ -86,23 +86,23 @@ export default class LoginScreen1 extends Component {
               </View>
               <View style={{flex: 1, flexDirection: 'row', marginTop: 20, marginHorizontal: 40, justifyContent: 'center', alignItems: 'center'}}>
                 <Text style={{flex: 1, fontSize: 26, color: 'white', fontFamily: 'bold'}}>
-                  Theresa
+                  Anh Dũng
                 </Text>
                 <Text style={{flex: 0.5, fontSize: 15, color: 'gray', textAlign: 'left', marginTop: 5}}>
-                  0.8 mi
+                  1996
                 </Text>
                 <Text style={{flex: 1, fontSize: 26, color: 'green', fontFamily: 'bold', textAlign: 'right'}}>
-                  84%
+                  100%
                 </Text>
               </View>
               <View style={{flex: 1, marginTop: 20, width: SCREEN_WIDTH - 80, marginLeft: 40}}>
                 <Text style={{flex: 1, fontSize: 15, color: 'white', fontFamily: 'regular'}}>
-                  100% Italian, fun loving, affectionate, young lady who knows what it takes to make a relationship work.
+                  Tiến Lên Phía Trước
                 </Text>
               </View>
               <View style={{flex: 1, marginTop: 30}}>
                 <Text style={{flex: 1, fontSize: 15, color: 'rgba(216, 121, 112, 1)', fontFamily: 'regular', marginLeft: 40}}>
-                  INTERESTS
+                  Sở Thích
                 </Text>
                 <View style={{flex: 1, width: SCREEN_WIDTH, marginTop: 20}}>
                   <ScrollView
@@ -135,7 +135,7 @@ export default class LoginScreen1 extends Component {
               </View>
               <View style={{flex: 1, marginTop: 30}}>
                 <Text style={{flex: 1, fontSize: 15, color: 'rgba(216, 121, 112, 1)', fontFamily: 'regular', marginLeft: 40}}>
-                  INFO
+                  Thông Tin Chi Tiết
                 </Text>
                 <View style={{flex: 1, flexDirection: 'row', marginTop: 20, marginHorizontal: 30}}>
                   <View style={{flex: 1, flexDirection: 'row'}}>
@@ -182,7 +182,7 @@ export default class LoginScreen1 extends Component {
                   start: [1, 0],
                   end: [0.2, 0]
                 }}
-                text="Message Theresa"
+                text="Cập Nhật Thông Tin"
                 textStyle={{ fontFamily: 'regular', fontSize: 20, color: 'white', textAlign: 'center' }}
                 onPress={() => console.log('Message Theresa')}
                 activeOpacity={0.5}

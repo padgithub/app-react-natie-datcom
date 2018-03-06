@@ -14,10 +14,10 @@ const ListsDrawerItem = StackNavigator({
 );
 
 ListsDrawerItem.navigationOptions = {
-  drawerLabel: 'Lists',
+  drawerLabel: 'Quản Lý Quán',
   drawerIcon: ({ tintColor }) => (
     <Icon
-      name="list"
+      name="insert-chart"
       size={30}
       iconStyle={{
         width: 30,

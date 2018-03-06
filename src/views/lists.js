@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 
-import ListsScreen1 from './lists/screen1';
-import ListsScreen2 from './lists/screen2';
-import ListsScreen3 from './lists/screen3';
-import ListsScreen4 from './lists/screen4';
+import ListsScreen1 from './lists/infoshop';
+import ListsScreen2 from './lists/addmon';
+import ListsScreen3 from './lists/listorder';
+import ListsScreen4 from './lists/listorderacces';
 
 export default class Lists extends Component {
   render() {

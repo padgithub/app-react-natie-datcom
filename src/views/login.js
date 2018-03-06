@@ -1,21 +1,334 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView } from 'react-native';
+import * as firebase from 'firebase';
+import PropTypes from 'prop-types';
+import {
+  StyleSheet,
+  View,
+  Text,
+  ImageBackground,
+  Dimensions,
+  LayoutAnimation,
+  Alert,
+  UIManager,
+  KeyboardAvoidingView,
+} from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import { Font } from 'expo';
+import { Input, Button } from 'react-native-elements'
 
-// :fire: this is v good, @xavier-villelegier
-import LoginScreen3 from './login/screen3';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
+firebase.initializeApp(
+  {
+    apiKey: "AIzaSyCtELT37k9AVjLliQBRz3gXhmOIvAe2NZo",
+    authDomain: "react-native-datcom-online.firebaseapp.com",
+    databaseURL: "https://react-native-datcom-online.firebaseio.com",
+    projectId: "react-native-datcom-online",
+    storageBucket: "react-native-datcom-online.appspot.com",
+    messagingSenderId: "1044758110561"
+  }
+);
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-export default class Login extends Component {
+const BG_IMAGE = require('../../assets/images/bg_screen4.jpg');
+
+// Enable LayoutAnimation on Android
+UIManager.setLayoutAnimationEnabledExperimental
+  && UIManager.setLayoutAnimationEnabledExperimental(true);
+
+const TabSelector = ({ selected }) => {
+  return (
+    <View style={styles.selectorContainer}>
+      <View style={selected && styles.selected}/>
+    </View>
+  );
+};
+
+TabSelector.propTypes = {
+  selected: PropTypes.bool.isRequired,
+};
+
+export default class LoginScreen extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: '',
+      password: '',
+      fontLoaded: false,
+      selectedCategory: 0,
+      isLoading: false,
+      isEmailValid: true,
+      isPasswordValid: true,
+      isConfirmationValid: true,
+    };
+
+    this.selectCategory = this.selectCategory.bind(this);
+    this.login = this.login.bind(this);
+    this.signUp = this.signUp.bind(this);
+  }
+
+  async componentDidMount() {
+    await Font.loadAsync({
+      'georgia': require('../../assets/fonts/Georgia.ttf'),
+      'regular': require('../../assets/fonts/Montserrat-Regular.ttf'),
+      'light': require('../../assets/fonts/Montserrat-Light.ttf'),
+    });
+
+    this.setState({ fontLoaded: true });
+  }
+
+  selectCategory(selectedCategory) {
+    LayoutAnimation.easeInEaseOut();
+    this.setState({
+      selectedCategory,
+      isLoading: false,
+    });
+  }
+
+  validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    return re.test(email);
+  }
+  
+  login() {
+    const {
+      email,
+      password,
+    } = this.state;
+    var {navigate} = this.props.navigation;
+    this.setState({ isLoading: true });
+    // Simulate an API call
+    setTimeout(() => {
+      LayoutAnimation.easeInEaseOut();
+      this.setState({
+        isLoading: false,
+        isEmailValid: this.validateEmail(email) || this.emailInput.shake(),
+        isPasswordValid: password.length >= 8 || this.passwordInput.shake(),
+      });
+    }, 1500);
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(()=>{
+      Alert.alert(
+        'Thông Báo',
+        'Dang Nhap Thanh Cong',
+        [
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => navigate("Components", {})}
+        ],
+        { cancelable: false }
+      )
+      })
+    .catch(function(error) {
+      Alert.alert(
+        'Thông Báo',
+        'Đăng Nhập Thất Bại',
+        [
+          {text: 'OK', onPress: () =>  console.log('OK'), style: 'oke'}
+        ],
+        { cancelable: false }
+      )
+    });
+  }
+  signUp() {
+    const {
+      email,
+      password,
+      passwordConfirmation,
+    } = this.state;
+    var {navigate} = this.props.navigation;
+    setTimeout(() => {
+      LayoutAnimation.easeInEaseOut();
+      this.setState({
+        isLoading: false,
+        isEmailValid: this.validateEmail(email) || this.emailInput.shake(),
+        isPasswordValid: password.length >= 8 || this.passwordInput.shake(),
+        isConfirmationValid: password == passwordConfirmation || this.confirmationInput.shake(),
+      });
+    }, 1500);
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(()=>{
+      Alert.alert(
+        'Thông Báo',
+        'Đăng ký thành công',
+        [
+          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+          {text: 'OK', onPress: () => navigate("Components", {})}
+        ],
+        { cancelable: false }
+      )
+      })
+    .catch(function(error) {
+      Alert.alert(
+        'Thông Báo',
+        'Đăng ký Thất bại',
+        [
+          {text: 'OK', onPress: () =>  console.log('Dang ky that bai'), style: 'oke'}
+        ],
+        { cancelable: false }
+      )
+    });
+  }
+
   render() {
+    const {
+      selectedCategory,
+      isLoading,
+      isEmailValid,
+      isPasswordValid,
+      isConfirmationValid,
+      email,
+      password,
+      passwordConfirmation,
+    } = this.state;
+    const isLoginPage = selectedCategory === 0;
+    const isSignUpPage = selectedCategory === 1;
     return (
       <View style={styles.container}>
-        <ScrollView
-          horizontal
-          pagingEnabled
-          decelerationRate={0.993}
+        <ImageBackground
+          source={BG_IMAGE}
+          style={styles.bgImage}
         >
-          <LoginScreen3 />
-  
-        </ScrollView>
+          {this.state.fontLoaded ?
+            <View>
+              <KeyboardAvoidingView contentContainerStyle={styles.loginContainer} behavior='position'>
+                <View style={styles.titleContainer}>
+                  <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.titleText}>Cơm Hộp</Text>
+                  </View>
+                  <View style={{marginTop: -10, marginLeft: 10}}>
+                    <Text style={styles.titleText}>Online</Text>
+                  </View>
+                </View>
+                <View style={{flexDirection: 'row'}}>
+                  <Button
+                    disabled={isLoading}
+                    clear
+                    activeOpacity={0.7}
+                    onPress={() => this.selectCategory(0)}
+                    textStyle={[styles.categoryText, isLoginPage && styles.selectedCategoryText]}
+                    text={'Login'}
+                  />
+                  <Button
+                    disabled={isLoading}
+                    clear
+                    activeOpacity={0.7}
+                    onPress={() => this.selectCategory(1)}
+                    textStyle={[styles.categoryText, isSignUpPage && styles.selectedCategoryText]}
+                    text={'Sign up'}
+                  />
+                </View>
+                <View style={styles.rowSelector}>
+                  <TabSelector selected={isLoginPage}/>
+                  <TabSelector selected={isSignUpPage}/>
+                </View>
+                <View style={styles.formContainer}>
+                  <Input
+                    icon={
+                      <Icon
+                        name='envelope-o'
+                        color='rgba(0, 0, 0, 0.38)'
+                        size={25}
+                        style={{backgroundColor: 'transparent'}}
+                      />
+                    }
+                    value={email}
+                    keyboardAppearance='light'
+                    autoFocus={false}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    keyboardType='email-address'
+                    returnKeyType='next'
+                    inputStyle={{marginLeft: 10}}
+                    placeholder={'Email'}
+                    containerStyle={{borderBottomColor: 'rgba(0, 0, 0, 0.38)'}}
+                    ref={input => this.emailInput = input}
+                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onChangeText={email => this.setState({ email })}
+                    displayError={!isEmailValid}
+                    errorMessage='Please enter a valid email address'
+                  />
+                  <Input
+                    icon={
+                      <SimpleIcon
+                        name='lock'
+                        color='rgba(0, 0, 0, 0.38)'
+                        size={25}
+                        style={{backgroundColor: 'transparent'}}
+                      />
+                    }
+                    value={password}
+                    keyboardAppearance='light'
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    secureTextEntry={true}
+                    returnKeyType={isSignUpPage ? 'next' : 'done'}
+                    blurOnSubmit={true}
+                    containerStyle={{marginTop: 16, borderBottomColor: 'rgba(0, 0, 0, 0.38)'}}
+                    inputStyle={{marginLeft: 10}}
+                    placeholder={'Password'}
+                    ref={input => this.passwordInput = input}
+                    onSubmitEditing={() => isSignUpPage ? this.confirmationInput.focus() : this.login()}
+                    onChangeText={(password) => this.setState({password})}
+                    displayError={!isPasswordValid}
+                    errorMessage='Please enter at least 8 characters'
+                  />
+                  {isSignUpPage &&
+                    <Input
+                      icon={
+                        <SimpleIcon
+                          name='lock'
+                          color='rgba(0, 0, 0, 0.38)'
+                          size={25}
+                          style={{backgroundColor: 'transparent'}}
+                        />
+                      }
+                      value={passwordConfirmation}
+                      secureTextEntry={true}
+                      keyboardAppearance='light'
+                      autoCapitalize='none'
+                      autoCorrect={false}
+                      keyboardType='default'
+                      returnKeyType={'done'}
+                      blurOnSubmit={true}
+                      containerStyle={{marginTop: 16, borderBottomColor: 'rgba(0, 0, 0, 0.38)'}}
+                      inputStyle={{marginLeft: 10}}
+                      placeholder={'Confirm password'}
+                      ref={input => this.confirmationInput = input}
+                      onSubmitEditing={this.signUp}
+                      onChangeText={passwordConfirmation => this.setState({ passwordConfirmation })}
+                      displayError={!isConfirmationValid}
+                      errorMessage='Please enter the same password'
+                    />}
+                    <Button
+                      buttonStyle={styles.loginButton}
+                      containerStyle={{marginTop: 32, flex: 0}}
+                      activeOpacity={0.8}
+                      text={isLoginPage ? 'LOGIN' : 'SIGN UP'}
+                      onPress={isLoginPage ? this.login : this.signUp}
+                      textStyle={styles.loginTextButton}
+                      loading={isLoading}
+                      disabled={isLoading}
+                    />
+                </View>
+              </KeyboardAvoidingView>
+              <View style={styles.helpContainer}>
+                <Button
+                  text={'Need help ?'}
+                  textStyle={{color: 'white'}}
+                  buttonStyle={{backgroundColor: 'transparent'}}
+                  underlayColor='transparent'
+                  onPress={() => console.log('Account created')}
+                />
+              </View>
+            </View>
+          :
+          <Text>Loading...</Text>
+        }
+        </ImageBackground>
       </View>
     );
   }
@@ -24,6 +337,88 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black'
-  }
+  },
+  rowSelector: {
+    height: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  selectorContainer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  selected: {
+    position: 'absolute',
+    borderRadius: 50,
+    height: 0,
+    width: 0,
+    top: -5,
+    borderRightWidth: 70,
+    borderBottomWidth: 70,
+    borderColor: 'white',
+    backgroundColor: 'white',
+  },
+  loginContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loginTextButton: {
+    fontSize: 16,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  loginButton: {
+    backgroundColor: 'rgba(232, 147, 142, 1)',
+    borderRadius: 10,
+    height: 50,
+    width: 200,
+  },
+  titleContainer: {
+    height: 150,
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+  },
+  formContainer: {
+    backgroundColor: 'white',
+    width: SCREEN_WIDTH - 30,
+    borderRadius: 10,
+    paddingTop: 32,
+    paddingBottom: 32,
+    alignItems:'center',
+  },
+  loginText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  bgImage: {
+    flex: 1,
+    top: 0,
+    left: 0,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  categoryText: {
+    textAlign: 'center',
+    color: 'white',
+    fontSize: 24,
+    fontFamily: 'light',
+    backgroundColor: 'transparent',
+    opacity: 0.54,
+  },
+  selectedCategoryText: {
+    opacity: 1,
+  },
+  titleText: {
+    color: 'white',
+    fontSize: 30,
+    fontFamily: 'regular',
+  },
+  helpContainer: {
+    height: 64,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });

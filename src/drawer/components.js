@@ -81,10 +81,10 @@ const Components = TabNavigator(
 );
 
 Components.navigationOptions = {
-  drawerLabel: 'Components',
+  drawerLabel: 'Trang Chủ',
   drawerIcon: ({ tintColor }) => (
     <Icon
-      name="settings"
+      name="home"
       size={30}
       iconStyle={{
         width: 30,

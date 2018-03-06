@@ -24,7 +24,7 @@ const ButtonsTab = StackNavigator({
     screen: ButtonsTabView,
     path: '/',
     navigationOptions: ({ navigation }) => ({
-      title: 'Buttons',
+      title: 'Cơm Hộp Online',
       headerLeft: (
         <Icon
           name="menu"

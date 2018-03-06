@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Text, ImageBackground, Dimensions } from 'react-native';
-
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -10,10 +9,11 @@ export default class LoginScreen2 extends Component {
   render() {
     return (
       <View style={styles.container}>
-      
+          
           <Text style={styles.loginText}>
             Home Screen
           </Text>
+         
       </View>
     );
   }

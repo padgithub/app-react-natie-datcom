@@ -21,7 +21,7 @@ const FontsTab = StackNavigator({
     screen: FontsTabView,
     path: '/',
     navigationOptions: ({ navigation }) => ({
-      title: 'Fonts',
+      title: 'Giỏ Hàng',
       headerLeft: (
         <Icon
           name="menu"

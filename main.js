@@ -15,11 +15,15 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const CustomDrawerContentComponent = props => (
   <View style={{ flex: 1, backgroundColor: '#43484d' }}>
     <View
-      style={{ marginTop: 40, justifyContent: 'center', alignItems: 'center' }}
+      style={{ flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+       }}
     >
       <Image
-        source={require('./src/images/logo.png')}
-        style={{ width: SCREEN_WIDTH * 0.57 }}
+        source={require('./src/images/logo3.png')}
+        style={{ width: SCREEN_WIDTH * 0.68 }}
         resizeMode="contain"
       />
     </View>
@@ -31,6 +35,10 @@ const CustomDrawerContentComponent = props => (
 
 const MainRoot = DrawerNavigator(
   {
+    Components: {
+      path: '/components',
+      screen: Components,
+    },
     Login: {
       path: '/login',
       screen: Login
@@ -42,10 +50,6 @@ const MainRoot = DrawerNavigator(
     Lists: {
       path: '/lists',
       screen: Lists
-    },
-    Components: {
-      path: '/components',
-      screen: Components,
     },
     Ratings: {
       path: '/ratings',
