@@ -9,8 +9,7 @@ export default class LoginScreen2 extends Component {
       <View style={styles.container}>
           
           <Text style={styles.loginText}>
-            Gio hang Screen dm condsa  chos nha nguoijdkalsf
-            
+          daklsjflkcon bof ni metj zom  hjhkjhfuyyfytyfu
           </Text>
          
       </View>

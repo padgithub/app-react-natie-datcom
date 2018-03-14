@@ -13,7 +13,7 @@ const ProfileDrawerItem = StackNavigator({
 );
 
 ProfileDrawerItem.navigationOptions = {
-  drawerLabel: 'Thông Tin KH',
+  drawerLabel: 'Thông Tin Người Dùng',
   drawerIcon: ({ tintColor }) => (
     <Icon
       name="person"

@@ -1,13 +1,11 @@
-import * as firebase from 'firebase';
-firebase.initializeApp(
-    {
+import * as firebase from 'firebase'; 
+
+var config = {
       apiKey: "AIzaSyCtELT37k9AVjLliQBRz3gXhmOIvAe2NZo",
       authDomain: "react-native-datcom-online.firebaseapp.com",
       databaseURL: "https://react-native-datcom-online.firebaseio.com",
       projectId: "react-native-datcom-online",
       storageBucket: "react-native-datcom-online.appspot.com",
       messagingSenderId: "1044758110561"
-    }
-  );
-
-export default FireBaseConfig
+};
+export const firebaseApp = firebase.initializeApp(config);

@@ -1,79 +1,41 @@
 import React, { Component } from 'react';
-import { ScrollView, View, StyleSheet, Platform } from 'react-native';
-import colors from 'HSColors';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { StyleSheet, View, Text, ImageBackground, Dimensions } from 'react-native';
 
-import { PricingCard, Text } from 'react-native-elements';
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
-class Pricing extends Component {
+
+
+export default class LoginScreen2 extends Component {
   render() {
     return (
-      <ScrollView style={{ backgroundColor: 'white' }}>
-        <View style={styles.hero}>
-          <Icon color="white" name="games" size={62} />
-          <Text style={styles.heading}>Pricing</Text>
-        </View>
-        <PricingCard
-          color={colors.primary}
-          title="Free"
-          price="$0"
-          info={['1 User', 'Basic Support', 'All Core Features']}
-          button={{ title: 'GET STARTED', icon: 'flight-takeoff' }}
-        />
-        <PricingCard
-          color={colors.secondary}
-          title="Starter"
-          price="$19"
-          info={['10 Users', 'Basic Support', 'All Core Features']}
-          button={{ title: 'GET STARTED', icon: 'flight-takeoff' }}
-        />
-        <PricingCard
-          color={colors.secondary2}
-          title="Enterprise"
-          price="$49"
-          info={['100 Users', 'One on One Support', 'All Core Features']}
-          button={{ title: 'GET STARTED', icon: 'flight-takeoff' }}
-        />
-      </ScrollView>
+      <View style={styles.container}>
+      
+          <Text style={styles.loginText}>
+            Profile Screen
+          </Text>
+      </View>
     );
   }
 }
 
-Pricing.navigationOptions = {
-  title: 'Pricing',
-};
-
 const styles = StyleSheet.create({
-  hero: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 40,
-    backgroundColor: colors.primary2,
+  container: {
+    flex: 1,
   },
-  heading: {
+  bgImage: {
+    flex: 1,
+    top: 0,
+    left: 0,
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  loginText: {
     color: 'white',
-    marginTop: 10,
-    fontSize: 22,
-  },
-  titleText: {
-    fontSize: 25,
+    fontSize: 30,
     fontWeight: 'bold',
-    textAlign: 'center',
-    paddingVertical: 5,
-    fontFamily: Platform.OS === 'ios' ? 'Menlo-Bold' : null,
-    color: '#27ae60',
-  },
-  subtitleText: {
-    fontSize: 18,
-    fontWeight: '400',
-    textAlign: 'center',
-    fontFamily: Platform.OS === 'ios' ? 'Trebuchet MS' : null,
-    color: '#34495e',
-  },
-  viewContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    backgroundColor: 'transparent'
+  }
 });
-
-export default Pricing;

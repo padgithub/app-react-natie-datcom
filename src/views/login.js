@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as firebase from 'firebase';
+import {firebaseApp} from '../config/firebaseconfig'; 
 import PropTypes from 'prop-types';
 import {
   StyleSheet,
@@ -18,16 +18,6 @@ import { Input, Button } from 'react-native-elements'
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SimpleIcon from 'react-native-vector-icons/SimpleLineIcons';
-firebase.initializeApp(
-  {
-    apiKey: "AIzaSyCtELT37k9AVjLliQBRz3gXhmOIvAe2NZo",
-    authDomain: "react-native-datcom-online.firebaseapp.com",
-    databaseURL: "https://react-native-datcom-online.firebaseio.com",
-    projectId: "react-native-datcom-online",
-    storageBucket: "react-native-datcom-online.appspot.com",
-    messagingSenderId: "1044758110561"
-  }
-);
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 
@@ -40,7 +30,7 @@ UIManager.setLayoutAnimationEnabledExperimental
 const TabSelector = ({ selected }) => {
   return (
     <View style={styles.selectorContainer}>
-      <View style={selected && styles.selected}/>
+      <View style={selected && styles.selected} />
     </View>
   );
 };
@@ -63,6 +53,7 @@ export default class LoginScreen extends Component {
       isEmailValid: true,
       isPasswordValid: true,
       isConfirmationValid: true,
+      isAcces: true,
     };
 
     this.selectCategory = this.selectCategory.bind(this);
@@ -93,13 +84,45 @@ export default class LoginScreen extends Component {
 
     return re.test(email);
   }
-  
+
+  signInAccess(){
+    const {
+      email,
+      password,
+    } = this.state;
+    var { navigate } = this.props.navigation;    
+    if(this.state.isAcces = true){
+      firebaseApp.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        Alert.alert(
+          'Thông Báo',
+          'Dang Nhap Thanh Cong',
+          [
+            { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+            { text: 'OK', onPress: () => navigate("Components", {}) }
+          ],
+          { cancelable: false }
+        )
+      })
+      .catch(function (error) {
+        Alert.alert(
+          'Thông Báo',
+          'Đăng Nhập Thất Bại',
+          [
+            { text: 'OK', onPress: () => console.log('OK'), style: 'oke' }
+          ],
+          { cancelable: false }
+        )
+      });
+    }
+    else
+      console.log("Da goi"); 
+  }
   login() {
     const {
       email,
       password,
     } = this.state;
-    var {navigate} = this.props.navigation;
     this.setState({ isLoading: true });
     // Simulate an API call
     setTimeout(() => {
@@ -110,28 +133,45 @@ export default class LoginScreen extends Component {
         isPasswordValid: password.length >= 8 || this.passwordInput.shake(),
       });
     }, 1500);
-    firebase.auth().signInWithEmailAndPassword(email, password)
-    .then(()=>{
-      Alert.alert(
-        'Thông Báo',
-        'Dang Nhap Thanh Cong',
-        [
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => navigate("Components", {})}
-        ],
-        { cancelable: false }
-      )
-      })
-    .catch(function(error) {
-      Alert.alert(
-        'Thông Báo',
-        'Đăng Nhập Thất Bại',
-        [
-          {text: 'OK', onPress: () =>  console.log('OK'), style: 'oke'}
-        ],
-        { cancelable: false }
-      )
-    });
+    this.signInAccess();
+  } 
+  signUpAcces() {
+    const {
+      email,
+      password,
+    } = this.state;
+    var { navigate } = this.props.navigation;
+    if (this.state.isAcces=true) {
+      firebaseApp.auth().createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          Alert.alert(
+            'Thông Báo',
+            'Đăng ký thành công',
+            [
+              { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+              { text: 'OK', onPress: () => navigate("Components", {}) }
+            ],
+            { cancelable: false }
+          )
+          this.setState.email = ""; 
+          this.setState.password = ""; 
+        })
+        .catch(function (error) {
+          Alert.alert(
+            'Thông Báo',
+            'Đăng ký Thất bại',
+            [
+              { text: 'OK', onPress: () => console.log('Dang ky that bai'), style: 'oke' }
+            ],
+            { cancelable: false }
+          )
+        });
+        console.log("DA_Goi_Ham"); 
+    }else
+    {
+      console.log("DA GOI");
+
+    }
   }
   signUp() {
     const {
@@ -139,38 +179,18 @@ export default class LoginScreen extends Component {
       password,
       passwordConfirmation,
     } = this.state;
-    var {navigate} = this.props.navigation;
+    
     setTimeout(() => {
       LayoutAnimation.easeInEaseOut();
       this.setState({
         isLoading: false,
+        isAcces: false,
         isEmailValid: this.validateEmail(email) || this.emailInput.shake(),
         isPasswordValid: password.length >= 8 || this.passwordInput.shake(),
         isConfirmationValid: password == passwordConfirmation || this.confirmationInput.shake(),
       });
     }, 1500);
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then(()=>{
-      Alert.alert(
-        'Thông Báo',
-        'Đăng ký thành công',
-        [
-          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: () => navigate("Components", {})}
-        ],
-        { cancelable: false }
-      )
-      })
-    .catch(function(error) {
-      Alert.alert(
-        'Thông Báo',
-        'Đăng ký Thất bại',
-        [
-          {text: 'OK', onPress: () =>  console.log('Dang ky that bai'), style: 'oke'}
-        ],
-        { cancelable: false }
-      )
-    });
+    this.signUpAcces();
   }
 
   render() {
@@ -196,14 +216,14 @@ export default class LoginScreen extends Component {
             <View>
               <KeyboardAvoidingView contentContainerStyle={styles.loginContainer} behavior='position'>
                 <View style={styles.titleContainer}>
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.titleText}>Cơm Hộp</Text>
                   </View>
-                  <View style={{marginTop: -10, marginLeft: 10}}>
+                  <View style={{ marginTop: -10, marginLeft: 10 }}>
                     <Text style={styles.titleText}>Online</Text>
                   </View>
                 </View>
-                <View style={{flexDirection: 'row'}}>
+                <View style={{ flexDirection: 'row' }}>
                   <Button
                     disabled={isLoading}
                     clear
@@ -222,8 +242,8 @@ export default class LoginScreen extends Component {
                   />
                 </View>
                 <View style={styles.rowSelector}>
-                  <TabSelector selected={isLoginPage}/>
-                  <TabSelector selected={isSignUpPage}/>
+                  <TabSelector selected={isLoginPage} />
+                  <TabSelector selected={isSignUpPage} />
                 </View>
                 <View style={styles.formContainer}>
                   <Input
@@ -232,7 +252,7 @@ export default class LoginScreen extends Component {
                         name='envelope-o'
                         color='rgba(0, 0, 0, 0.38)'
                         size={25}
-                        style={{backgroundColor: 'transparent'}}
+                        style={{ backgroundColor: 'transparent' }}
                       />
                     }
                     value={email}
@@ -242,9 +262,9 @@ export default class LoginScreen extends Component {
                     autoCorrect={false}
                     keyboardType='email-address'
                     returnKeyType='next'
-                    inputStyle={{marginLeft: 10}}
+                    inputStyle={{ marginLeft: 10 }}
                     placeholder={'Email'}
-                    containerStyle={{borderBottomColor: 'rgba(0, 0, 0, 0.38)'}}
+                    containerStyle={{ borderBottomColor: 'rgba(0, 0, 0, 0.38)' }}
                     ref={input => this.emailInput = input}
                     onSubmitEditing={() => this.passwordInput.focus()}
                     onChangeText={email => this.setState({ email })}
@@ -257,7 +277,7 @@ export default class LoginScreen extends Component {
                         name='lock'
                         color='rgba(0, 0, 0, 0.38)'
                         size={25}
-                        style={{backgroundColor: 'transparent'}}
+                        style={{ backgroundColor: 'transparent' }}
                       />
                     }
                     value={password}
@@ -267,12 +287,12 @@ export default class LoginScreen extends Component {
                     secureTextEntry={true}
                     returnKeyType={isSignUpPage ? 'next' : 'done'}
                     blurOnSubmit={true}
-                    containerStyle={{marginTop: 16, borderBottomColor: 'rgba(0, 0, 0, 0.38)'}}
-                    inputStyle={{marginLeft: 10}}
+                    containerStyle={{ marginTop: 16, borderBottomColor: 'rgba(0, 0, 0, 0.38)' }}
+                    inputStyle={{ marginLeft: 10 }}
                     placeholder={'Password'}
                     ref={input => this.passwordInput = input}
                     onSubmitEditing={() => isSignUpPage ? this.confirmationInput.focus() : this.login()}
-                    onChangeText={(password) => this.setState({password})}
+                    onChangeText={(password) => this.setState({ password })}
                     displayError={!isPasswordValid}
                     errorMessage='Please enter at least 8 characters'
                   />
@@ -283,7 +303,7 @@ export default class LoginScreen extends Component {
                           name='lock'
                           color='rgba(0, 0, 0, 0.38)'
                           size={25}
-                          style={{backgroundColor: 'transparent'}}
+                          style={{ backgroundColor: 'transparent' }}
                         />
                       }
                       value={passwordConfirmation}
@@ -294,8 +314,8 @@ export default class LoginScreen extends Component {
                       keyboardType='default'
                       returnKeyType={'done'}
                       blurOnSubmit={true}
-                      containerStyle={{marginTop: 16, borderBottomColor: 'rgba(0, 0, 0, 0.38)'}}
-                      inputStyle={{marginLeft: 10}}
+                      containerStyle={{ marginTop: 16, borderBottomColor: 'rgba(0, 0, 0, 0.38)' }}
+                      inputStyle={{ marginLeft: 10 }}
                       placeholder={'Confirm password'}
                       ref={input => this.confirmationInput = input}
                       onSubmitEditing={this.signUp}
@@ -303,31 +323,31 @@ export default class LoginScreen extends Component {
                       displayError={!isConfirmationValid}
                       errorMessage='Please enter the same password'
                     />}
-                    <Button
-                      buttonStyle={styles.loginButton}
-                      containerStyle={{marginTop: 32, flex: 0}}
-                      activeOpacity={0.8}
-                      text={isLoginPage ? 'LOGIN' : 'SIGN UP'}
-                      onPress={isLoginPage ? this.login : this.signUp}
-                      textStyle={styles.loginTextButton}
-                      loading={isLoading}
-                      disabled={isLoading}
-                    />
+                  <Button
+                    buttonStyle={styles.loginButton}
+                    containerStyle={{ marginTop: 32, flex: 0 }}
+                    activeOpacity={0.8}
+                    text={isLoginPage ? 'LOGIN' : 'SIGN UP'}
+                    onPress={isLoginPage ? this.login : this.signUp}
+                    textStyle={styles.loginTextButton}
+                    loading={isLoading}
+                    disabled={isLoading}
+                  />
                 </View>
               </KeyboardAvoidingView>
               <View style={styles.helpContainer}>
                 <Button
                   text={'Need help ?'}
-                  textStyle={{color: 'white'}}
-                  buttonStyle={{backgroundColor: 'transparent'}}
+                  textStyle={{ color: 'white' }}
+                  buttonStyle={{ backgroundColor: 'transparent' }}
                   underlayColor='transparent'
                   onPress={() => console.log('Account created')}
                 />
               </View>
             </View>
-          :
-          <Text>Loading...</Text>
-        }
+            :
+            <Text>Loading...</Text>
+          }
         </ImageBackground>
       </View>
     );
@@ -384,7 +404,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingTop: 32,
     paddingBottom: 32,
-    alignItems:'center',
+    alignItems: 'center',
   },
   loginText: {
     fontSize: 16,
