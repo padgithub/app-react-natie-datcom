@@ -5,20 +5,20 @@ import { View, Text, StyleSheet } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
-import FontsHome from '../views/fonts_home';
-import FontsDetails from '../views/fonts_detail';
+import CartsHome from '../views/carts_home';
+import CartsDetails from '../views/carts_detail';
 
-const FontsTabView = ({ navigation }) => (
-  <FontsHome banner="Fonts" navigation={navigation} />
+const CartsTabView = ({ navigation }) => (
+  <CartsHome banner="Carts" navigation={navigation} />
 );
 
-const FontsDetailTabView = ({ navigation }) => (
-  <FontsDetails banner="Fonts Detail" navigation={navigation} />
+const CartsDetailTabView = ({ navigation }) => (
+  <CartsDetails banner="Carts Detail" navigation={navigation} />
 );
 
-const FontsTab = StackNavigator({
+const CartsTab = StackNavigator({
   Home: {
-    screen: FontsTabView,
+    screen: CartsTabView,
     path: '/',
     navigationOptions: ({ navigation }) => ({
       title: 'Giỏ Hàng',
@@ -34,12 +34,12 @@ const FontsTab = StackNavigator({
     }),
   },
   Detail: {
-    screen: FontsDetailTabView,
-    path: 'fonts_detail',
+    screen: CartsDetailTabView,
+    path: 'carts_detail',
     navigationOptions: {
-      title: 'Fonts Detail',
+      title: 'Carts Detail',
     },
   },
 });
 
-export default FontsTab;
+export default CartsTab;

@@ -4,11 +4,11 @@ import React, { Component } from 'react';
 import { StackNavigator } from 'react-navigation';
 import { Icon,SearchBar } from 'react-native-elements';
 
-import InputHome from '../views/input_home';
-import InputDetails from '../views/input_details';
+import SearchHome from '../views/search_home';
+import SearchDetails from '../views/search_details';
 
-const InputTabView = ({ navigation }) => (
-  <InputHome navigation={navigation} />
+const SearchTabView = ({ navigation }) => (
+  <SearchHome navigation={navigation} />
 );
 
 const dummySearchBarProps = {
@@ -20,32 +20,32 @@ const dummySearchBarProps = {
   onChangeText: text => console.log("text:", text),
 }
 
-const InputDetailTabView = ({ navigation }) => (
-  <InputDetails
+const SearchDetailTabView = ({ navigation }) => (
+  <SearchDetails
     banner={`${navigation.state.params.name}s Profile`}
     navigation={navigation}
   />
 );
 
-const InputTab = StackNavigator({
-  Input: {
-    screen: InputTabView,
+const SearchTab = StackNavigator({
+  Search: {
+    screen: SearchTabView,
     path: '/',
     navigationOptions: ({ navigation }) => ({
       //title: 'Input'
       headerRight: (
-        <SearchBar placeholder="Nhập chửa hàng cần tìm" platform="ios" {...dummySearchBarProps} />
+        <SearchBar placeholder="Nhập chửa hàng cần tìm" platform="android" {...dummySearchBarProps} />
       ),
     }),
 
   },
-  Input_Detail: {
-    screen: InputDetailTabView,
-    path: '/input_detail',
+  Search_Detail: {
+    screen: SearchDetailTabView,
+    path: '/search_details',
     navigationOptions: {
-      title: 'Input Detail',
+      title: 'Search Detail',
     },
   },
 });
 
-export default InputTab;
+export default SearchTab;

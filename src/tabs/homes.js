@@ -5,23 +5,23 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
-import ButtonsHome from '../views/buttons_home';
-import ButtonsDetails from '../views/buttons_detail';
+import HomesHome from '../views/homes_home';
+import HomesDetails from '../views/homes_detail';
 
-const ButtonsTabView = ({ navigation }) => (
-  <ButtonsHome navigation={navigation} />
+const HomesTabView = ({ navigation }) => (
+  <HomesHome navigation={navigation} />
 );
 
-const ButtonsDetailTabView = ({ navigation }) => (
-  <ButtonsDetails
+const HomesDetailTabView = ({ navigation }) => (
+  <HomesDetails
     banner={`${navigation.state.params.name}s Profile`}
     navigation={navigation}
   />
 );
 
-const ButtonsTab = StackNavigator({
-  Buttons: {
-    screen: ButtonsTabView,
+const HomesTab = StackNavigator({
+  Homes: {
+    screen: HomesTabView,
     path: '/',
     navigationOptions: ({ navigation }) => ({
       title: 'Cơm Hộp Online',
@@ -36,13 +36,13 @@ const ButtonsTab = StackNavigator({
       ),
     }),
   },
-  Button_Detail: {
-    screen: ButtonsDetailTabView,
-    path: '/buttons_detail',
+  Home_Detail: {
+    screen: HomesDetailTabView,
+    path: '/homes_detail',
     navigationOptions: {
-      title: 'Buttons Detail',
+      title: 'Homes Detail',
     },
   },
 });
 
-export default ButtonsTab;
+export default HomesTab;

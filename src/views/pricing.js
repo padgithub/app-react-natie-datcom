@@ -12,7 +12,7 @@ export default class LoginScreen2 extends Component {
       <View style={styles.container}>
       
           <Text style={styles.loginText}>
-            Profile Screen
+            Profile Screen du ma
           </Text>
       </View>
     );

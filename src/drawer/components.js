@@ -3,16 +3,16 @@ import React from 'react';
 import { TabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
-import ButtonsTab from '../tabs/buttons';
+import HomesTab from '../tabs/homes';
 import ListsTab from '../tabs/lists';
-import InputTab from '../tabs/input';
-import FontsTab from '../tabs/fonts';
+import SearchTab from '../tabs/search';
+import CartTab from '../tabs/carts';
 
 const Components = TabNavigator(
   {
-    ButtonsTab: {
-      screen: ButtonsTab,
-      path: '/buttons',
+    HomesTab: {
+      screen: HomesTab,
+      path: '/homes',
       navigationOptions: {
         tabBarLabel: 'Trang Chủ',
         tabBarIcon: ({ tintColor, focused }) => (
@@ -35,9 +35,9 @@ const Components = TabNavigator(
         ),
       },
     },
-    InputTab: {
-      screen: InputTab,
-      path: '/input',
+    SearchTab: {
+      screen: SearchTab,
+      path: '/search',
       navigationOptions: {
         tabBarLabel: 'Tìm Kiếm',
         tabBarIcon: ({ tintColor, focused }) => (
@@ -50,9 +50,9 @@ const Components = TabNavigator(
         ),
       },
     },
-    FontsTab: {
-      screen: FontsTab,
-      path: '/fonts',
+    CartTab: {
+      screen: CartTab,
+      path: '/carts',
       navigationOptions: {
         tabBarLabel: 'Giỏ Hàng',
         tabBarIcon: ({ tintColor, focused }) => (
@@ -67,7 +67,7 @@ const Components = TabNavigator(
     },
   },
   {
-    initialRouteName: 'ButtonsTab',
+    initialRouteName: 'HomesTab',
     animationEnabled: false,
     swipeEnabled: true,
     // Android's default option displays tabBars on top, but iOS is bottom

@@ -105,14 +105,7 @@ export default class LoginScreen extends Component {
         )
       })
       .catch(function (error) {
-        Alert.alert(
-          'Thông Báo',
-          'Đăng Nhập Thất Bại',
-          [
-            { text: 'OK', onPress: () => console.log('OK'), style: 'oke' }
-          ],
-          { cancelable: false }
-        )
+        console.log("Dang Nhap That Bai");
       });
     }
     else
@@ -157,14 +150,7 @@ export default class LoginScreen extends Component {
           this.setState.password = ""; 
         })
         .catch(function (error) {
-          Alert.alert(
-            'Thông Báo',
-            'Đăng ký Thất bại',
-            [
-              { text: 'OK', onPress: () => console.log('Dang ky that bai'), style: 'oke' }
-            ],
-            { cancelable: false }
-          )
+          console.log("Dang Ky That Bai");
         });
         console.log("DA_Goi_Ham"); 
     }else
